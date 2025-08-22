@@ -68,6 +68,37 @@ app.get("/alunos/cor/:cor", (req, res) => {
     }
 });
 
+app.post("/alunos", (req, res) => {
+    //quando colocou esses informações na chave{}, o body descompactou
+    const {nome, cor, idade} = req.body;
+
+    if(!nome || !cor || !idade){
+        return res.status(400).json({ msg: "Nome, cor e idade são obrigatórios"})
+    }
+
+    // ALUNOS.length = 3
+    // ALUNOS[2]
+    // ALUNOS.length - 1
+    // ALUNOS[2].id = 3
+    // ALUNOS[2].id + 1
+    // id = 4
+    // let id = 0
+    // if(ALUNOS.length > 0){
+    //     id = ALUNOS[ALUNOS.length - 1.id + 1]
+    // }else{
+    //     id = 1
+    // }
+
+    const id = ALUNOS.length > 0 ? ALUNOS[ALUNOS.length - 1].id + 1 : 1
+    const novoAluno = {
+        id, nome, cor, idade
+    }
+
+    console.log(novoAluno)
+    ALUNOS.push(novoAluno)
+    res.status(201).json({ msg: "Aluno criado com sucesso"})
+})
+
 app.listen(PORT, ()=>{
     console.log(`Servidor rodando em http://localhost:${PORT}`)
 })
